@@ -16,4 +16,6 @@ spec:
               service:
                 name: geodata-web-service
                 port:
-                  number: 8080
+                  number: 80
+                  # use the line bellow for geodata-app
+                  #number: 8080
