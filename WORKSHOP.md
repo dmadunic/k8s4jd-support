@@ -1,11 +1,14 @@
-# K8s for Java Developers workshop
+# K8s for Java Developers workshop (step by step)
 
-Installation prerequisites:
+## Prerequisites
+
+### Installed tools
 - docker
 - minikube
-- install stakater reloader
 
-**start minikube**
+## Setup minikub
+See the **"Minikube setup"** section in README.md
+
 
 ## 1. Deploy postgres
 
@@ -32,7 +35,7 @@ Now lets deploy postgres to kubernetes
 kubectl apply -f postgres/postgres-deployment.yml
 ```
 
-We need to expose database to others as service, so execue:
+We need to expose database to others as service, so execue the following command:
 
 ```bash
 kubectl apply -f postgres/postgres-service.yaml
@@ -90,4 +93,16 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ```
 
 ## Create ingress and exposose geodata app
+
+```bash
+kubectl apply -f geodata/ingress.yml
+```
+Executing the command above will, in geodata namespace, create ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
+
+## Creating ingress in the default namespace
+TODO:
+- Remove ingress service created in geodata namespace
+- Create external service for geodata-web-service
+- Create ingress in default namespace
+
 

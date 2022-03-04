@@ -1,26 +1,7 @@
 # k8s4jd-support
 Kubernetes for Java developers project support files.
 
-## 1. Database setup 
-(copy from geodata README.md)
-
-If you already do not have it create database named: **ag04**. 
-Connect to database with user that has sufficient privileges and execute:
-
-```sql
-CREATE DATABASE ag04;
-```
-
-The next step is to create **geodata** user and his corresponding schema.
-To do so execute the following sql commands:
-
-```sql
-CREATE ROLE geodata NOSUPERUSER NOCREATEDB NOCREATEROLE NOINHERIT LOGIN PASSWORD 'geodatapwd';
-GRANT ALL PRIVILEGES ON DATABASE ag04 TO geodata;
-CREATE SCHEMA IF NOT EXISTS AUTHORIZATION "geodata";
-```
-
-## 2. Minikube setup
+## 1. Minikube setup
 
 Start minikube.
 
@@ -43,36 +24,18 @@ minikube ip
 
 This address is referenced in the rest of this documents as MINIKUBE_IP.
 
-### 2.1. Enable ingress addon
+### 1.1. Enable ingress addon
 
 ```sh
 minikube addons enable ingress
 ```
 
-### 2.2. Allow connections to local Postgres from minikube 
+### 1.2 Install Reloader
 
-Find out location of postgres.conf, to do so execute:
-
-```bash
-sudo -u postgres psql -c 'SHOW config_file'
+```sh
+kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
 ```
-Edit postgres.conf and pg_hba.conf files: 
-
-* add the line `listen_addresses = '*'` to postgres.conf
-* add the line `host all all MINIKUBE_IP/24 md5` to pg_hba.conf
-* restart the postgres service
-
-On Ubuntu issue:
-```bash
-sudo service postgresql restart
-```
-Now it is time to create ExternalService that points to your host Postgres instance.
-
-```bash
-kubectl apply -f default/postgres-host-svc.yml
-```
-
-### 2.3. Add entires to /etc/hosts
+### 1.2. Add entires to /etc/hosts
 
 Add these entry to /etc/hosts file
 
@@ -80,24 +43,15 @@ Add these entry to /etc/hosts file
 MINIKUBE_IP    www.local-minikube.io
 MINIKUBE_IP    geodata.local-minikube.io
 ```
-
 Change the address above with the IP address of minikube on your machine.
 
-### 2.4 Install Reloader
-
-```sh
-kubectl apply -f https://raw.githubusercontent.com/stakater/Reloader/master/deployments/kubernetes/reloader.yaml
-```
-
-
-## 3. Deploy geodata-app to minikube
+## 2. (Quick) Deploy geodata application to minikube
 
 Simply run the following script:
 
 ```bash
 ./geodata-create.sh
 ```
-
 
 To cleanup minikube from all geodata related objects execute:
 
@@ -119,8 +73,7 @@ kubectl expose deployment geodata-app-deployment --name geodata-app-lb \
 ```bash
 kubectl apply -f default/ingress-ns-default.yml
 ```
-
-## 4. Configuring minikube resources (CPU/memory)
+## 3. Configuring minikube resources (CPU/memory)
 
 If minikube is lacking resources to run the objects created by the script above, you need to give it more cpu and memory than granted by default cnfiguration.
 
@@ -136,4 +89,3 @@ On Linux run:
 ```sh
 minikube start start --cpus=2 --memory 6072
 ```
-
