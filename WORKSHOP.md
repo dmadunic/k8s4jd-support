@@ -97,9 +97,10 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ```bash
 kubectl apply -f geodata/ingress.yml
 ```
-Executing the command above will, in geodata namespace, create ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
+Executing the command above will creat, in geodata namespace, an ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
 
-## Creating ingress in the default namespace
+## Single ingress in the default namespace
+
 TODO:
 - Remove ingress service created in geodata namespace
 - Create external service for geodata-web-service
