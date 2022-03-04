@@ -14,6 +14,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: geodata-app-service
+                name: geodata-web-service
                 port:
                   number: 8080

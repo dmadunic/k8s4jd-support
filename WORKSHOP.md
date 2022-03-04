@@ -3,6 +3,7 @@
 Installation prerequisites:
 - docker
 - minikube
+- install stakater reloader
 
 **start minikube**
 
@@ -70,4 +71,23 @@ kubectl create -f geodata/namespace.yml
 
 ## Deploy geodata-rest application
 
+```bash
+kubectl apply -f geodata/geodata-config.yml
+kubectl apply -f geodata/geodata-secret.yml
+```
+Now it is time to create geodata-rest deployment and service:
+
+```bash
+kubectl apply -f geodata/rest/geodata-rest-deployment.yml
+kubectl apply -f geodata/rest/geodata-rest-service.yml
+```
+
+## Deploy geodata-web application
+
+```bash
+kubectl apply -f geodata/web/geodata-web-deployment.yml
+kubectl apply -f geodata/web/geodata-web-service.yml
+```
+
+## Create ingress and exposose geodata app
 

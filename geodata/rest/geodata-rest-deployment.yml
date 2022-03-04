@@ -1,10 +1,10 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: geodata-app-deployment
+  name: geodata-rest-deployment
   namespace: geodata
   labels:
-    app: geodata-app
+    app: geodata-rest
   annotations:
     configmap.reloader.stakater.com/reload: "geodata-config"
     secret.reloader.stakater.com/reload: "geodata-secret"
@@ -17,16 +17,16 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      deploy: geodata-app-pod
+      deploy: geodata-rest
   template:
     metadata:
       labels:
-        app: geodata-app-pod
-        deploy: geodata-app-pod
+        app: geodata-rest
+        deploy: geodata-rest
     spec:
       containers:
-        - name: geodata-app
-          image: ag04/geodata-app:0.0.6
+        - name: geodata-rest
+          image: ag04/geodata-rest-sb:latest
           imagePullPolicy: Always
           env:
           - name: _JAVA_OPTIONS
@@ -60,6 +60,11 @@ spec:
               configMapKeyRef:
                 name: geodata-config
                 key: "db_schema"
+          - name: GRSB_LIQUIBASE_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "grsb_liquibase_enabled"
           - name: LIQUIBASE_CONTEXTS
             valueFrom:
               configMapKeyRef:
@@ -70,21 +75,21 @@ spec:
               configMapKeyRef:
                 name: geodata-config
                 key: "app_base_url"
+          - name: APP_MAIL_FROM
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "app_mail_from"
           - name: MAIL_HOST
             valueFrom:
               configMapKeyRef:
                 name: geodata-config
                 key: "mail_host"
-          - name: MAIL_USERNAME
+          - name: MAIL_USER
             valueFrom:
               configMapKeyRef:
                 name: geodata-config
-                key: "mail_username"
-          - name: MAIL_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: geodata-config
-                key: "mail_port"
+                key: "mail_user"
           - name: MAIL_PWD
             valueFrom:
               secretKeyRef:
@@ -105,13 +110,13 @@ spec:
             httpGet:
               path: /management/health
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: 40
             periodSeconds: 10
             failureThreshold: 6
           livenessProbe:
             httpGet:
               path: /management/health
               port: http
-            initialDelaySeconds: 120
+            initialDelaySeconds: 90
             periodSeconds: 10
             failureThreshold: 3

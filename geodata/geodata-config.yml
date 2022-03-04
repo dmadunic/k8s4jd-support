@@ -1,15 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: geodata-app-config
+  name: geodata-config
   namespace: geodata
 data:
   spring_profiles_active: "prod,api-docs"
-  datasource_url: "jdbc:postgresql://postgres-db-svc.default:5432/ag04"
+  datasource_url: "jdbc:postgresql://postgres-service.default.svc.cluster.local:5432/geodata"
   geodata_db_user: "geodata"
-  db_schema: "geodata"
+  db_schema: "public"
   liquibase_contexts: "dev"
-  app_base_url: ""
+  app_base_url: "http://geodata.local-minikube.io/#/"
+  app_mail_from: "geodata@ag04.com"
+  grsb_liquibase_enabled: "true"
+  mail_user: "xxxxx"
   mail_host: "localhost"
-  mail_username: ""
-  mail_port: ""
