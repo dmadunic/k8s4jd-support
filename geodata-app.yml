@@ -1,0 +1,56 @@
+#--------------------------------------------------------------------
+# This docker-compose file will start all geodata application services:
+# 1) geodata-rest-sb: Spring boot powered REST API
+# 2) geodata-ng: Angular based frontend applicaiton running on nginx (avaliable at http://localhost:9000)
+# 3) postgres database
+# 
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+#
+# (c) Domagoj Madunic 2022.
+#--------------------------------------------------------------------
+version: '3.8'
+services:
+  geodata-ng:
+    image: ag04/geodata-ng:latest
+    environment:
+      - GEODATA_API_URL=http://geodata-rest-sb:8080/api
+      - GEODATA_MNGMT_URL=http://geodata-rest-sb:8080/management
+      - GEODATA_SWAGGER_URL=http://geodata-rest-sb:8080/swagger-resources
+      - GEODATA_AUTH_URL=http://geodata-rest-sb:8081/auth
+    ports:
+    - "9000:80"
+  geodata-rest-sb:
+    image: ag04/geodata-rest-sb:latest
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      #- SPRING_DATASOURCE_URL=jdbc:postgresql://geodatarestsb-postgresql:5432/geodataRestSb
+      #- SPRING_LIQUIBASE_URL=jdbc:postgresql://geodatarestsb-postgresql:5432/geodataRestSb
+      - JHIPSTER_SLEEP=10 # gives time for other services to boot before the application
+      - DATASOURCE_URL=jdbc:postgresql://geodatarestsb-postgresql:5432/geodataRestSb
+      - DB_USER=geodataRestSb
+      - DB_PWD=
+      - DB_SCHEMA=public
+      - GRSB_LIQUIBASE_ENABLED=true
+      - LIQUIBASE_CONTEXTS=dev
+      - MAIL_HOST=localhost
+      - MAIL_USER=someUser
+      - MAIL_PWD=somePassword
+      - APP_BASE_URL=http://localhost:8080
+    ports:
+      - 8080:8080
+    depends_on:
+      - geodatarestsb-postgresql
+  geodatarestsb-postgresql:
+    image: postgres:13.5
+    # volumes:
+    #   - ~/volumes/jhipster/geodataRestSb/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=geodataRestSb
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:5433:5432
