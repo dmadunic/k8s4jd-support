@@ -52,7 +52,7 @@ Checkout [WORKSHOP.md](./WORKSHOP.md) for detailed step by step instructions on 
 Simply run the following script:
 
 ```bash
-./geodata-create.sh
+./geodata-create.sh -a
 ```
 This will deploy the following to your minikube instance:
 1. Persistante volume and claim, size of 5Gi, located in '/mnt/minikube/postgres-data' (this is used by Postgres to persist database data)
@@ -60,7 +60,7 @@ This will deploy the following to your minikube instance:
 3. geodata-rest - Java/Spring boot powered geodata REST API, with its config and secret map
 4. geodata-web - Angular frontend application
 
-To cleanup minikube of all geodata related objects execute:
+To cleanup minikube of all geodata related resources (including postgres) execute:
 
 ```bash
 ./geodata-delete.sh
