@@ -10,6 +10,7 @@ usage(){
 [OR]
  Usage: $0 -p
  Description: Create only postgres database
+
 EOF
 exit 0
 }
@@ -23,7 +24,7 @@ postgres() {
     kubectl create -f postgres/postgres-sv.yml
     kubectl create -f postgres/postgres-pvc.yml
     kubectl apply -f postgres/postgres-deployment.yml
-    kubectl apply -f postgres/postgres-service.yaml
+    kubectl apply -f postgres/postgres-service.yml
 }
 
 geodata() {
@@ -39,9 +40,9 @@ geodata() {
 
 #kubectl apply -f default/ingress-ns-default.yml
 
-[[ "$@" =~ ^-[dneb]{1}$ ]]  || usage;
+[[ "$@" =~ ^-[agp]{1}$ ]]  || usage;
 
-while getopts ":dneb" opt; do
+while getopts ":agp" opt; do
     case ${opt} in
     a ) echo "Createing geodata namespace and all objects (rest-api, web and database)"; default ;;
     g ) echo "Createing only geodata namespace objects (rest-api, web)"; geodata ;;
