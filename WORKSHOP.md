@@ -64,7 +64,7 @@ kubectl port-forward service/postgres-service 5435:5432
 
 Once all is working as expected kill port-forwarding by pressing ^C inside the terminal.
 
-# 2. Create geodata namespace
+# 2. Create geodata namespace and resources
 
 Position yourself in terminal in the root folder of this repository.
 
@@ -73,6 +73,8 @@ kubectl create -f geodata/namespace.yml
 ```
 
 ## Deploy geodata-rest application
+
+First we need to create config and secret maps that hold rest-api configuration parameteres.
 
 ```bash
 kubectl apply -f geodata/geodata-config.yml
@@ -102,9 +104,19 @@ Executing the command above will creat, in geodata namespace, an ingress service
 
 ## Single ingress in the default namespace
 
-TODO:
-- Remove ingress service created in geodata namespace
-- Create external service for geodata-web-service
-- Create ingress in default namespace
+1. Remove ingress service created in geodata namespace
+```bash
+kubectl delete ingress -n geodata geodata-ingress
+```
+
+2. Create external service for geodata-web-service
+```bash
+kubectl apply -f default/geodata-service-svc.yml
+```
+
+3. Create ingress in default namespace
+```bash
+kubectl apply -f default/ingress-ns-default.yml
+```
 
 
