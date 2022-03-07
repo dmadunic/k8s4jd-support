@@ -45,6 +45,8 @@ MINIKUBE_IP    geodata.local-minikube.io
 ```
 Change the address above with the IP address of minikube on your machine.
 
+Checkout [WORKSHOP.md](./WORKSHOP.md) for detailed step by step instructions on deploying demo geodata app to minikube or follow the instructons in the following sections for the quick deply.
+
 ## 2. (Quick) Deploy geodata application to minikube
 
 Simply run the following script:
