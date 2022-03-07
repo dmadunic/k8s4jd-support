@@ -63,8 +63,10 @@ To cleanup minikube of all geodata related objects execute:
 ```bash
 ./geodata-delete.sh
 ```
+If you have exposed geodata over Ingress service you should delete it manually.
 
-**Test deployment**
+
+**Test deployment (optional)**
 
 To test if everything is working properly, expose geodata-app by using this command:
 

@@ -62,7 +62,7 @@ kubectl port-forward service/postgres-service 5435:5432
 
 **Now starup dbeaver and connect to databse on localhost:5435**
 
-Once all is working as expected kill port-forwar by pressing ^C inside the terminal.
+Once all is working as expected kill port-forwarding by pressing ^C inside the terminal.
 
 # 2. Create geodata namespace
 
@@ -97,6 +97,7 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ```bash
 kubectl apply -f geodata/ingress.yml
 ```
+
 Executing the command above will creat, in geodata namespace, an ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
 
 ## Single ingress in the default namespace
