@@ -28,7 +28,7 @@ spec:
           - name: GEODATA_MNGMT_URL
             value: "http://geodata-rest-service:8080/management"
           - name: GEODATA_SWAGGER_URL
-            value: "http://geodata-rest-service:8080/v3"
+            value: "http://geodata-rest-service:8080/swagger-resources"
           - name: GEODATA_AUTH_URL
             value: "http://geodata-rest-service:8081/auth"
           ports:
