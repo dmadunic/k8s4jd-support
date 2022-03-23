@@ -1,0 +1,18 @@
+{{- if .Values.postgres.deploy }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.postgres.persistentStorage.baseName }}-pv
+  namespace: geodata
+  labels:
+    type: local
+    app: postgres
+spec:
+  storageClassName: manual
+  capacity:
+    storage: {{ .Values.postgres.persistentStorage.size }}
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: {{ .Values.postgres.persistentStorage.hostPath }}
+{{- end }}

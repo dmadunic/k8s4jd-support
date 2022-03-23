@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  namespace: geodata
+data:
+  spring_profiles_active: "prod,api-docs"
+  liquibase_contexts: "{{ .Values.geodata.liquibase.contexts }}"
+  grsb_liquibase_enabled: "{{ .Values.geodata.liquibase.enabled }}"
+  datasource_url: "jdbc:postgresql://postgres-db-service:{{ .Values.postgres.port }}/{{ .Values.postgres.database.name }}"
+  geodata_db_user: "{{ .Values.postgres.database.user }}"
+  db_schema: "{{ .Values.postgres.database.schema }}"
+  app_base_url: "{{ .Values.geodata.protocol }}://{{ .Values.geodata.host }}{{ .Values.geodata.path }}#"
+  app_mail_from: "{{ .Values.geodata.mail.from }}"
+  mail_host: "{{ .Values.geodata.mail.host }}"
+  mail_user: "{{ .Values.geodata.mail.user }}"

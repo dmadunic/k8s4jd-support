@@ -1,0 +1,41 @@
+# Default values for geodata-complete.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Postgres configuration
+postgres:
+  deploy: true
+  port: 5432
+  container:
+    image: postgres:13.5
+  host:
+    address: host.minikube.internal
+  database:
+    name: geodata
+    user: geodata
+    password: geodatapwd
+    schema: public
+  persistentStorage:
+    enabled: true
+    baseName: geodata-pg
+    size: 5Gi
+    hostPath: "/mnt/minikube/postgres-data"
+
+# Ingress options
+ingress:
+  enabled: true
+  host: geodata.local-minikube.io
+
+# application options
+geodata:
+  liquibase:
+    enabled: true
+    contexts: "dev"
+  protocol: http
+  host: geodata.local-minikube.io
+  path: /
+  mail:
+    host: localhost
+    user: yyyyyyyy
+    password: xxxxxxxxx
+    from: geodata@workshop.ag04.io

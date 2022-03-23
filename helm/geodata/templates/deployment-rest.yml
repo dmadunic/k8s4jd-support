@@ -1,0 +1,122 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: geodata-rest-deployment
+  namespace: geodata
+  labels:
+    app: geodata-rest
+  annotations:
+    configmap.reloader.stakater.com/reload: "geodata-config"
+    secret.reloader.stakater.com/reload: "geodata-secret"
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      deploy: geodata-rest
+  template:
+    metadata:
+      labels:
+        app: geodata-rest
+        deploy: geodata-rest
+    spec:
+      containers:
+        - name: geodata-rest
+          image: ag04/geodata-rest-sb:latest
+          imagePullPolicy: Always
+          env:
+          - name: _JAVA_OPTIONS
+            value: "-Xmx768m -Xms384m"
+          - name: MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED
+            value: "true"
+          - name: JHIPSTER_SLEEP
+            value: "1"
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "spring_profiles_active"
+          - name: DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "datasource_url"
+          - name: DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "geodata_db_user"
+          - name: DB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: geodata-secret
+                key: "geodata_db_pwd"
+          - name: DB_SCHEMA
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "db_schema"
+          - name: GRSB_LIQUIBASE_ENABLED
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "grsb_liquibase_enabled"
+          - name: LIQUIBASE_CONTEXTS
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "liquibase_contexts"
+          - name: APP_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "app_base_url"
+          - name: APP_MAIL_FROM
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "app_mail_from"
+          - name: MAIL_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "mail_host"
+          - name: MAIL_USER
+            valueFrom:
+              configMapKeyRef:
+                name: geodata-config
+                key: "mail_user"
+          - name: MAIL_PWD
+            valueFrom:
+              secretKeyRef:
+                name: geodata-secret
+                key: "geodata_mail_pwd"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: '384Mi'
+              cpu: '400m'
+            limits:
+              memory: '768Mi'
+              cpu: '1'
+          readinessProbe:
+            httpGet:
+              path: /management/health
+              port: http
+            initialDelaySeconds: 40
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /management/health
+              port: http
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            failureThreshold: 3

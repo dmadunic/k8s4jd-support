@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: geodata-web-service
+  namespace: geodata
+  labels:
+    app: geodata-web-service
+spec:
+  selector:
+    app: geodata-web
+  ports:
+    - name: http
+      port: 80

@@ -1,0 +1,16 @@
+{{- if .Values.postgres.deploy }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.postgres.persistentStorage.baseName }}-pv-claim
+  namespace: geodata
+  labels:
+    app: postgres
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.postgres.persistentStorage.size }}
+{{- end }}
