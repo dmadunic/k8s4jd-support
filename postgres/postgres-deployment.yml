@@ -31,8 +31,8 @@ spec:
                   key: "postgres_user"
             - name: POSTGRES_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: postgres-config
+                secretKeyRef:
+                  name: postgres-secret
                   key: "postgres_password"
           volumeMounts:
             - mountPath: /var/lib/postgresql/data

@@ -12,9 +12,10 @@ See the **"Minikube setup"** section in README.md
 
 ## 1. Deploy postgres
 
-Forst we need to create map:
+Forst we need to create config and secret maps:
 ```bash
 kubectl apply -f postgres/postgres-config.yml
+kubectl apply -f postgres/postgres-secret.yml
 ```
 Now persitent volume:
 
