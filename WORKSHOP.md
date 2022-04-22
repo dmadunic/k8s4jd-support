@@ -12,19 +12,19 @@ See the **"Minikube setup"** section in README.md
 
 ## 1. Deploy postgres
 
-Forst we need to create config and secret maps:
+First we need to create config and secret maps:
 ```bash
 kubectl apply -f postgres/postgres-config.yml
 kubectl apply -f postgres/postgres-secret.yml
 ```
-Now persitent volume:
+Now persistent volume:
 
 ```bash
 kubectl create -f postgres/postgres-sv.yml
 kubectl create -f postgres/postgres-pvc.yml
 ```
 
-Check if all went well by issueing:
+Check if all went well by issuing:
 
 ```bash
 kubectl get pvc
@@ -67,7 +67,7 @@ We can expose this service, to the outside world by using port forwarding:
 kubectl port-forward service/postgres-service 5435:5432
 ```
 
-**Now starup dbeaver and connect to databse on localhost:5435**
+**Now startup dbeaver and connect to databse on localhost:5435**
 
 Once all is working as expected kill port-forwarding by pressing ^C inside the terminal.
 
@@ -121,13 +121,13 @@ minikube tunnel
 ```
 
 
-## Create ingress and exposose geodata app
+## Create ingress and expose geodata app
 
 ```bash
 kubectl apply -f geodata/ingress.yml
 ```
 
-Executing the command above will creat, in geodata namespace, an ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
+Executing the command above will create, in geodata namespace, an ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
 
 ## Single ingress in the default namespace
 
