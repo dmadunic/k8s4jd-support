@@ -8,7 +8,7 @@ In addition, this chart will install the following:
 - geodata namespace
 - geodata-config config map
 - geodata-secret secret map
-- geodata-res
+- geodata-rest
 - geodata-web
 - ingress
 
@@ -22,7 +22,7 @@ The following value, by default, defines that postgres image should be installed
 postgres:
   deploy: true
 ```
-This is the default behaviour of the chart. It will deploy postgres database to kubernetes cluster and initialize it geodata database in it, and add role *geotada* with *geodatapwd* credentials to it.
+This is the default behaviour of the chart. It will deploy postgres database to kubernetes cluster and initialize it geodata database in it, and add role *geodata* with *geodatapwd* credentials to it.
 
 
 To deploy geodata application without postgres database, create custom **values.yml** file:

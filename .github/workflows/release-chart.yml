@@ -1,0 +1,19 @@
+name: release-chart
+on:
+  workflow_dispatch:
+jobs:
+  release-chart:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish Helm chart
+        uses: stefanprodan/helm-gh-pages@master
+        with:
+          token: ${{ secrets.CHARTS_REPO_GITHUB_TOKEN }}
+          charts_dir: helm
+          charts_url: https://dmadunic.github.io/charts/
+          owner: dmadunic
+          repository: charts
+          branch: gh-pages
+          commit_username: k8s4jd
+          commit_email: k8s4jd@github.com
