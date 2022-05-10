@@ -106,12 +106,18 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ```bash
 kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata
 ```
-Open in browser http://<node_ip>:<node_port>/
+Check service
+
+```bash
+kubectl get service -n geodata
+```
 
 Fetch node ip with
 ```bash  
 minikube ip
 ```
+
+Open in browser http://<node_ip>:<node_port>/
 
 ## Expose geodata app with LoadBalancer
 
