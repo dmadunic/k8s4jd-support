@@ -129,15 +129,17 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ```bash
 kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata --name geodata-web-np
 ```
-Check service
+
+Create an environment variable called NODE_PORT that has the value of the Node port assigned:
 
 ```bash
-kubectl get service -n geodata
+export NODE_PORT=$(kubectl get services/geodata-web-np -n geodata -o go-template='{{(index .spec.ports 0).nodePort}}')
+echo NODE_PORT=$NODE_PORT
 ```
 
-Fetch node ip with
+Fetch URL
 ```bash  
-minikube ip
+echo $(minikube ip):$NODE_PORT
 ```
 
 Open in browser http://<node_ip>:<node_port>/
