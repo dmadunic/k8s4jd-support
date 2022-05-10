@@ -123,9 +123,17 @@ Open in browser http://<node_ip>:<node_port>/
 
 ```bash 
 kubectl expose deployment geodata-web-deployment --type=LoadBalancer -n geodata --name geodata-web-lb
+```
+
+```bash
 minikube tunnel
 ```
 
+Check LoadBalancer external IP and open in browser
+
+```bash
+kubectl get svc -n geodata
+```
 
 ## Create ingress and expose geodata app
 
