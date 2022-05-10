@@ -9,6 +9,11 @@
 ## Setup minikub
 See the **"Minikube setup"** section in README.md
 
+### Enable ingress addon
+
+```sh
+minikube addons enable ingress
+```
 
 ## 1. Deploy postgres
 
