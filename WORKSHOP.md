@@ -159,7 +159,7 @@ export LB_IP=$(kubectl get service geodata-web-lb -n geodata -o jsonpath='{.stat
 echo LB_IP=$LB_IP
 ```
 
-Use LB IP address in browser
+Use LoadBalancer IP address in browser
 
 
 ## Create ingress and expose geodata app
@@ -169,6 +169,12 @@ kubectl apply -f geodata/ingress.yml
 ```
 
 Executing the command above will create, in geodata namespace, an ingress service that exposes geodata-web application on url: `geodata.local-minikube.io` on port 80.
+
+Add these entry to /etc/hosts file (replace MINIKUBE_IP with your minikube ip address)
+
+```bash
+MINIKUBE_IP    geodata.local-minikube.io
+```
 
 ## Single ingress in the default namespace
 
