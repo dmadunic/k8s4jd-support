@@ -133,7 +133,7 @@ kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata --na
 Create an environment variable called NODE_PORT that has the value of the Node port assigned:
 
 ```bash
-export NODE_PORT=$(kubectl get services/geodata-web-np -n geodata -o go-template='{{(index .spec.ports 0).nodePort}}')
+export NODE_PORT=$(kubectl get service geodata-web-np -n geodata -o jsonpath='{.spec.ports[0].nodePort}')
 echo NODE_PORT=$NODE_PORT
 ```
 
