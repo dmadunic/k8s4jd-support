@@ -104,7 +104,7 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ## Expose geodata app with NodePort
 
 ```bash
-kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata
+kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata --name geodata-web-lb
 ```
 Check service
 
@@ -122,7 +122,7 @@ Open in browser http://<node_ip>:<node_port>/
 ## Expose geodata app with LoadBalancer
 
 ```bash 
-kubectl expose deployment geodata-web-deployment --type=LoadBalancer -n geodata
+kubectl expose deployment geodata-web-deployment --type=LoadBalancer -n geodata --name geodata-web-lb
 minikube tunnel
 ```
 
