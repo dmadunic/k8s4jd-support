@@ -7,7 +7,24 @@
 - minikube
 
 ## Setup minikub
-See the **"Minikube setup"** section in README.md
+
+Start minikube.
+
+On Linux
+
+```sh
+minikube start
+```
+On macosx
+
+```sh
+minikube start --vm=true
+```
+
+Find out IP address of your minikube cluster by running:
+
+```sh
+minikube ip
 
 ### Enable ingress addon
 
