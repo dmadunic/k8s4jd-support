@@ -48,7 +48,7 @@ We need to expose database to others as service, so execue the following command
 kubectl apply -f postgres/postgres-service.yml
 ```
 
-To chek if all is working well, execute:
+To check if everything is working well, execute:
 
 ```bash
 kubectl get service postgres-service
