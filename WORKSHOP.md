@@ -142,8 +142,6 @@ Fetch URL
 echo $(minikube ip):$NODE_PORT
 ```
 
-Open in browser http://<node_ip>:<node_port>/
-
 ## Expose geodata app with LoadBalancer
 
 ```bash 
@@ -154,11 +152,15 @@ kubectl expose deployment geodata-web-deployment --type=LoadBalancer -n geodata 
 minikube tunnel
 ```
 
-Check LoadBalancer external IP and open in browser
+Create an environment variable called LB_IP that has the value of the LoadBalancer IP address assigned:
 
 ```bash
-kubectl get svc -n geodata
+export LB_IP=$(kubectl get service geodata-web-lb -n geodata -o jsonpath='{.status.loadBalancer.ingress[].ip}')
+echo LB_IP=$LB_IP
 ```
+
+Use LB IP address in browser
+
 
 ## Create ingress and expose geodata app
 
