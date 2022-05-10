@@ -104,7 +104,7 @@ kubectl apply -f geodata/web/geodata-web-service.yml
 ## Expose geodata app with NodePort
 
 ```bash
-kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata --name geodata-web-lb
+kubectl expose deployment geodata-web-deployment --type=NodePort -n geodata --name geodata-web-np
 ```
 Check service
 
