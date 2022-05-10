@@ -6,7 +6,7 @@
 - docker
 - minikube
 
-## Setup minikub
+## Setup minikube
 
 Start minikube.
 
@@ -25,6 +25,7 @@ Find out IP address of your minikube cluster by running:
 
 ```sh
 minikube ip
+```
 
 ### Enable ingress addon
 
