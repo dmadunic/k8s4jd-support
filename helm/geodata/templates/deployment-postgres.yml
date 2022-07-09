@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
-  namespace: geodata
+  name: {{ .Release.Name }}-postgres
+  namespace: {{ .Values.namespace.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: {{ .Release.Name }}-postgres
   template:
     metadata:
       labels:
-        app: postgres
+        app: {{ .Release.Name }}-postgres
     spec:
       containers:
-        - name: postgres
+        - name: {{ .Release.Name }}-postgres
           image: {{ .Values.postgres.container.image }}
           imagePullPolicy: "IfNotPresent"
           ports:

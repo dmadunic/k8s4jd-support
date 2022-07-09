@@ -1,15 +1,15 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: geodata-rest-deployment
-  namespace: geodata
+  name: {{ .Release.Name }}-rest-deployment
+  namespace: {{ .Values.namespace.name }}
   labels:
-    app: geodata-rest
+    app: {{ .Release.Name }}-rest
   annotations:
-    configmap.reloader.stakater.com/reload: "geodata-config"
-    secret.reloader.stakater.com/reload: "geodata-secret"
+    configmap.reloader.stakater.com/reload: "{{ .Release.Name }}-config"
+    secret.reloader.stakater.com/reload: "{{ .Release.Name }}-secret"
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount.web }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,17 +17,17 @@ spec:
       maxUnavailable: 1
   selector:
     matchLabels:
-      deploy: geodata-rest
+      deploy: {{ .Release.Name }}-rest
   template:
     metadata:
       labels:
-        app: geodata-rest
-        deploy: geodata-rest
+        app: {{ .Release.Name }}-rest
+        deploy: {{ .Release.Name }}-rest
     spec:
       containers:
-        - name: geodata-rest
-          image: ag04/geodata-rest-sb:latest
-          imagePullPolicy: Always
+        - name: {{ .Release.Name }}-rest
+          image: {{ .Values.image.geodataRest }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: _JAVA_OPTIONS
             value: "-Xmx768m -Xms384m"
@@ -38,17 +38,17 @@ spec:
           - name: SPRING_PROFILES_ACTIVE
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "spring_profiles_active"
           - name: DATASOURCE_URL
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "datasource_url"
           - name: DB_USER
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "geodata_db_user"
           - name: DB_PWD
             valueFrom:
@@ -58,43 +58,48 @@ spec:
           - name: DB_SCHEMA
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "db_schema"
           - name: GRSB_LIQUIBASE_ENABLED
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "grsb_liquibase_enabled"
           - name: LIQUIBASE_CONTEXTS
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "liquibase_contexts"
           - name: APP_BASE_URL
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "app_base_url"
           - name: APP_MAIL_FROM
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "app_mail_from"
           - name: MAIL_HOST
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "mail_host"
           - name: MAIL_USER
             valueFrom:
               configMapKeyRef:
-                name: geodata-config
+                name: {{ .Release.Name }}-config
                 key: "mail_user"
           - name: MAIL_PWD
             valueFrom:
               secretKeyRef:
-                name: geodata-secret
+                name: {{ .Release.Name }}-secret
                 key: "geodata_mail_pwd"
+          - name: MAX_POOL_SIZE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: "max_pool_size"
           ports:
             - name: http
               containerPort: 8080
@@ -110,13 +115,13 @@ spec:
             httpGet:
               path: /management/health
               port: http
-            initialDelaySeconds: 40
-            periodSeconds: 10
-            failureThreshold: 6
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           livenessProbe:
             httpGet:
               path: /management/health
               port: http
-            initialDelaySeconds: 90
-            periodSeconds: 10
-            failureThreshold: 3
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}

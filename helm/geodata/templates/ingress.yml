@@ -1,8 +1,9 @@
+{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: geodata-ingress
-  namespace: geodata
+  name: {{ .Release.Name }}-ingress
+  namespace: {{ .Values.namespace.name }}
   labels:
     app: ingress
 spec:
@@ -14,6 +15,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: geodata-web-service
+                name: {{ .Release.Name }}-web-service
                 port:
                   number: 80
+{{- end }}

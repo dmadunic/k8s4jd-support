@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.postgres.persistentStorage.baseName }}-pv-claim
-  namespace: geodata
+  namespace: {{ .Values.namespace.name }}
   labels:
     app: postgres
 spec:

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: geodata-rest-service
-  namespace: geodata
+  name: {{ .Release.Name }}-rest-service
+  namespace: {{ .Values.namespace.name }}
   labels:
-    app: geodata-rest-service
+    app: {{ .Release.Name }}-rest-service
 spec:
   selector:
-    app: geodata-rest
+    app: {{ .Release.Name }}-rest
   ports:
     - name: http
       port: 8080

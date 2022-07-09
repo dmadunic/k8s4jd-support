@@ -1,36 +1,36 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: geodata-web-deployment
-  namespace: geodata
+  name: {{ .Release.Name }}-web-deployment
+  namespace: {{ .Values.namespace.name }}
   labels:
-    app: geodata-web
+    app: {{ .Release.Name }}-web
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount.web }}
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      deploy: geodata-web
+      deploy: {{ .Release.Name }}-web
   template:      
     metadata:
       labels:
-        app: geodata-web
-        deploy: geodata-web
+        app: {{ .Release.Name }}-web
+        deploy: {{ .Release.Name }}-web
     spec:
       containers:
-        - name: geodata
-          image: ag04/geodata-ng:latest
-          imagePullPolicy: Always
+        - name: {{ .Release.Name }}-web
+          image: {{ .Values.image.geodataWeb }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: GEODATA_API_URL
-            value: "http://geodata-rest-service:8080/api"
+            value: "http://{{ .Release.Name }}-rest-service:8080/api"
           - name: GEODATA_MNGMT_URL
-            value: "http://geodata-rest-service:8080/management"
+            value: "http://{{ .Release.Name }}-rest-service:8080/management"
           - name: GEODATA_SWAGGER_URL
-            value: "http://geodata-rest-service:8080/swagger-resources"
+            value: "http://{{ .Release.Name }}-rest-service:8080/v3"
           - name: GEODATA_AUTH_URL
-            value: "http://geodata-rest-service:8081/auth"
+            value: "http://{{ .Release.Name }}-rest-service:8081/auth"
           ports:
             - name: http
               containerPort: 80

@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: geodata-web-service
-  namespace: geodata
+  name: {{ .Release.Name }}-web-service
+  namespace: {{ .Values.namespace.name }}
   labels:
-    app: geodata-web-service
+    app: {{ .Release.Name }}-web-service
 spec:
   selector:
-    app: geodata-web
+    app: {{ .Release.Name }}-web
   ports:
     - name: http
       port: 80

@@ -2,6 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+replicaCount:
+  api: 1
+  web: 1
+
+image: 
+  pullPolicy: Always
+  geodataRest: ag04/geodata-rest-sb:latest
+  geodataWeb: ag04/geodata-ng:latest
+
+namespace: 
+  create: true
+  name: geodata
+
 # Postgres configuration
 postgres:
   deploy: true
@@ -26,8 +39,19 @@ ingress:
   enabled: true
   host: geodata.local-minikube.io
 
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 6
+
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  failureThreshold: 3
+
 # application options
 geodata:
+  spring_profiles_active: prod,api-docs
   liquibase:
     enabled: true
     contexts: "dev"
@@ -39,3 +63,4 @@ geodata:
     user: yyyyyyyy
     password: xxxxxxxxx
     from: geodata@workshop.ag04.io
+  max_pool_size: 5
