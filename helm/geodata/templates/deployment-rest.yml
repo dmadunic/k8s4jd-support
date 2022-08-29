@@ -90,6 +90,11 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
                 key: "mail_user"
+          - name: MAIL_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: "mail_port"
           - name: MAIL_PWD
             valueFrom:
               secretKeyRef:

@@ -14,6 +14,7 @@ data:
   app_mail_from: "{{ .Values.geodata.mail.from }}"
   mail_host: "{{ .Values.geodata.mail.host }}"
   mail_user: "{{ .Values.geodata.mail.user }}"
+  mail_port: "{{ .Values.geodata.mail.port }}"
   max_pool_size: "{{ .Values.geodata.max_pool_size }}"
   {{ if .Values.geodata.infinispan.enabled }}
   infinispan_server_list: "{{ .Values.geodata.infinispan.server_list }}"
