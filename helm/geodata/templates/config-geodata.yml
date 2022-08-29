@@ -6,7 +6,7 @@ metadata:
 data:
   spring_profiles_active: "{{ .Values.geodata.spring_profiles_active }}"
   liquibase_contexts: "{{ .Values.geodata.liquibase.contexts }}"
-  grsb_liquibase_enabled: "{{ .Values.geodata.liquibase.enabled }}"
+  gr_liquibase_enabled: "{{ .Values.geodata.liquibase.enabled }}"
   datasource_url: "jdbc:postgresql://postgres-db-service:{{ .Values.postgres.port }}/{{ .Values.postgres.database.name }}"
   geodata_db_user: "{{ .Values.postgres.database.user }}"
   db_schema: "{{ .Values.postgres.database.schema }}"
@@ -15,3 +15,7 @@ data:
   mail_host: "{{ .Values.geodata.mail.host }}"
   mail_user: "{{ .Values.geodata.mail.user }}"
   max_pool_size: "{{ .Values.geodata.max_pool_size }}"
+  {{- if .Values.geodata.infinispan.enabled -}}
+  infinispan_server_list: "{{ .Values.geodata.infinispan.server_list }}"
+  infinispan_user: "{{ .Values.geodata.infinispan.user }}"
+  {{- end }}

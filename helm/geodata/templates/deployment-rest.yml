@@ -53,18 +53,18 @@ spec:
           - name: DB_PWD
             valueFrom:
               secretKeyRef:
-                name: geodata-secret
+                name: {{ .Release.Name }}-secret
                 key: "geodata_db_pwd"
           - name: DB_SCHEMA
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
                 key: "db_schema"
-          - name: GRSB_LIQUIBASE_ENABLED
+          - name: GR_LIQUIBASE_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
-                key: "grsb_liquibase_enabled"
+                key: "gr_liquibase_enabled"
           - name: LIQUIBASE_CONTEXTS
             valueFrom:
               configMapKeyRef:
@@ -100,6 +100,23 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
                 key: "max_pool_size"
+          {{- if .Values.geodata.infinispan.enabled -}}
+          - name: INFINISPAN-SERVER-LIST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: "infinispan_server_list"
+          - name: INFINISPAN-USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Release.Name }}-config
+                key: "infinispan_user"
+          - name: INFINISPAN-PWD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Release.Name }}-secret
+                key: "infinispan_pwd"
+          {{- end }}
           ports:
             - name: http
               containerPort: 8080

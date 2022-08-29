@@ -22,6 +22,7 @@ postgres:
   container:
     image: postgres:13.5
   host:
+    # Not used in default configuration
     address: host.minikube.internal
   database:
     name: geodata
@@ -64,3 +65,8 @@ geodata:
     password: xxxxxxxxx
     from: geodata@workshop.ag04.io
   max_pool_size: 5
+  infinispan:
+    enabled: false
+    server_list: infinispan.default.svc.cluster.local:11222
+    user: admin
+    pwd: secret

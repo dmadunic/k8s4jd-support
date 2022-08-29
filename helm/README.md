@@ -29,10 +29,10 @@ To deploy geodata application without postgres database, create custom **values.
 
 ```yaml
 postgres:
-  deploy: true
+  deploy: false
   port: 5432
   host:
-    address: address-of-your-host
+    address: address-of-your-host # ie host.minikube.internal
   database:
     name: geodata (change it based on your settings)
     user: geodata (change it based on your settings)
@@ -43,7 +43,7 @@ postgres:
 Then run helm install with this custom values file:
 
 ```bash
-helm install -f values.yaml geodata
+helm install -f values.yaml geodata .
 ```
 This will install all resources in geodata namespace.
 

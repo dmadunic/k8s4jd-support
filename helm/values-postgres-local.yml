@@ -1,0 +1,10 @@
+postgres:
+  deploy: false
+  port: 5432
+  host:
+    address: host.minikube.internal
+  database:
+    name: ag04
+    user: geodata
+    password: geodatapwd
+    schema: geodata
