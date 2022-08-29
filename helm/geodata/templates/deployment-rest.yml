@@ -100,7 +100,7 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
                 key: "max_pool_size"
-          {{- if .Values.geodata.infinispan.enabled -}}
+          {{ if .Values.geodata.infinispan.enabled }}
           - name: INFINISPAN-SERVER-LIST
             valueFrom:
               configMapKeyRef:
@@ -116,7 +116,7 @@ spec:
               secretKeyRef:
                 name: {{ .Release.Name }}-secret
                 key: "infinispan_pwd"
-          {{- end }}
+          {{ end }}
           ports:
             - name: http
               containerPort: 8080
