@@ -45,7 +45,7 @@ Then run helm install with this custom values file:
 ```bash
 helm install -f values.yaml geodata
 ```
-
+This will install all resources in geodata namespace.
 
 # Testing chart
 
