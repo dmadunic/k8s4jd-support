@@ -9,7 +9,7 @@ metadata:
     configmap.reloader.stakater.com/reload: "{{ .Release.Name }}-config"
     secret.reloader.stakater.com/reload: "{{ .Release.Name }}-secret"
 spec:
-  replicas: {{ .Values.replicaCount.web }}
+  replicas: {{ .Values.replicaCount.api }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
