@@ -40,6 +40,8 @@ spec:
               configMapKeyRef:
                 name: {{ .Release.Name }}-config
                 key: "spring_profiles_active"
+          - name: LIQUIBASE_SECURE_PARSING
+            value: "false"
           - name: DATASOURCE_URL
             valueFrom:
               configMapKeyRef:
