@@ -60,7 +60,7 @@ spec:
               configMapKeyRef:
                 name: geodata-config
                 key: "db_schema"
-          - name: GRSB_LIQUIBASE_ENABLED
+          - name: GR_LIQUIBASE_ENABLED
             valueFrom:
               configMapKeyRef:
                 name: geodata-config
